@@ -1,0 +1,12 @@
+20180418
+    1. add STATUS for memberupgrade
+    2. add BRANCHNAME for member recharge
+	
+20180525
+	1. statistics orders by WEEK & MONTH
+
+20180615
+	1. record consume time into log file, including indent function and statistic
+
+20180815
+	1. extend promotion function
