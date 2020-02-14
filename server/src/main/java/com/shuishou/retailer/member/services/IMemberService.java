@@ -25,4 +25,5 @@ public interface IMemberService {
 	ObjectResult updateMemberUpgrade(int userId, int id, String compareField, double smallValue, int smallRelation, double bigValue, int bigRelation, String executeField, double executeValue);
 	ObjectResult deleteMemberUpgrade(int userId, int id);
 	ObjectResult changeStatusMemberUpgrade(int userId, int id, int status);
+	ObjectResult updateMemberDiscountByScore(int userId, double targetRate, double fromScore, double toScore);
 }

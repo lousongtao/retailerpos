@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Lists;
 import com.shuishou.retailer.models.BaseDataAccessor;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class MemberDataAccessor extends BaseDataAccessor implements IMemberDataAccessor {
@@ -92,6 +93,17 @@ public class MemberDataAccessor extends BaseDataAccessor implements IMemberDataA
 	@Override
 	public void delete(Member m) {
 		sessionFactory.getCurrentSession().delete(m);
+	}
+
+	@Override
+	public int updateDiscountRateByScore(double targetRate, double fromScore, double toScore) {
+		String sql = "update member set discountRate = :targetRate where score >= :fromScore and score <= :toScore";
+		Query query = sessionFactory.getCurrentSession().createSQLQuery(sql);
+		query.setDouble("targetRate", targetRate);
+		query.setDouble("fromScore", fromScore);
+		query.setDouble("toScore", toScore);
+		int rows = query.executeUpdate();
+		return rows;
 	}
 
 

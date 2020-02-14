@@ -421,4 +421,13 @@ public class MemberService implements IMemberService{
 		logService.write(selfUser, LogData.LogType.MEMBERUPGRADE_CHANGE.toString(), "User " + selfUser + " update memberupgrade status to " + status);
 		return new ObjectResult(Result.OK, true, mu);
 	}
+
+	@Override
+	@Transactional
+	public ObjectResult updateMemberDiscountByScore(int userId, double targetRate, double fromScore, double toScore) {
+		int rows = memberDA.updateDiscountRateByScore(targetRate, fromScore, toScore);
+		UserData selfUser = userDA.getUserById(userId);
+		logService.write(selfUser, LogData.LogType.MEMBER_CHANGE.toString(), "User " + selfUser + " update discountRate as " + targetRate + " [" + fromScore + "-" + toScore + "]");
+		return new ObjectResult(Result.OK, true, rows);
+	}
 }

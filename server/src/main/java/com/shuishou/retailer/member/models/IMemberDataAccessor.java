@@ -16,4 +16,6 @@ public interface IMemberDataAccessor {
 	void save(Member m);
 	
 	void delete(Member m);
+
+	int updateDiscountRateByScore(double targetRate, double fromScore, double toScore);
 }

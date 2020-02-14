@@ -58,11 +58,12 @@ public class MemberQueryPanel extends JPanel implements ActionListener{
 	private JButton btnAdd = new JButton("Add");
 	private JButton btnUpdate = new JButton("Update");
 	private JButton btnUpdateScore = new JButton("Update Score");
+	private JButton btnUpdateDiscountByScore = new JButton("Batch Update Discount");
 	private JButton btnScoreHistory = new JButton("Score Log");
 	private JButton btnUpdateBalance = new JButton("Update Balance");
 	private JButton btnBalanceHistory = new JButton("Balance Log");
 	private JButton btnRecharge = new JButton("Recharge");
-	
+
 	private ArrayList<Member> members = new ArrayList<>();
 	
 	public MemberQueryPanel(MainFrame mainFrame){
@@ -117,19 +118,20 @@ public class MemberQueryPanel extends JPanel implements ActionListener{
 		pButtons.add(btnAdd);
 		pButtons.add(btnUpdate);
 		pButtons.add(btnUpdateScore);
+		pButtons.add(btnUpdateDiscountByScore);
 		pButtons.add(btnScoreHistory);
 		pButtons.add(btnUpdateBalance);
 		pButtons.add(btnBalanceHistory);
 		pButtons.add(btnRecharge);
-		
+
 		btnAdd.addActionListener(this);
 		btnUpdate.addActionListener(this);
 		btnUpdateScore.addActionListener(this);
+		btnUpdateDiscountByScore.addActionListener(this);
 		btnUpdateBalance.addActionListener(this);
 		btnRecharge.addActionListener(this);
 		btnBalanceHistory.addActionListener(this);
 		btnScoreHistory.addActionListener(this);
-		
 		setLayout(new BorderLayout());
 		add(jspTable, BorderLayout.CENTER);
 		add(pCondition, BorderLayout.NORTH);
@@ -223,6 +225,11 @@ public class MemberQueryPanel extends JPanel implements ActionListener{
 		m.setScore(result.data.getScore());
 		table.updateUI();//here is low efficient, buy using model.fireDataChange will occur an exception if existing a rowSorter.
 	}
+
+	private void doUpdateDiscountByScore(){
+		UpdateDiscountByScoreDialog dlg = new UpdateDiscountByScoreDialog(mainFrame);
+		dlg.setVisible(true);
+	}
 	
 	private void doUpdateBalance(){
 		if (table.getSelectedRow() < 0)
@@ -315,7 +322,9 @@ public class MemberQueryPanel extends JPanel implements ActionListener{
 			doUpdateMember();
 		} else if (e.getSource() == btnUpdateScore){
 			doUpdateScore();
-		} else if (e.getSource() == btnUpdateBalance){
+		} else if (e.getSource() == btnUpdateDiscountByScore) {
+			doUpdateDiscountByScore();
+		}else if (e.getSource() == btnUpdateBalance){
 			doUpdateBalance();
 		} else if (e.getSource() == btnRecharge){
 			doRecharge();

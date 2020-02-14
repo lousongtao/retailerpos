@@ -375,4 +375,24 @@ public class MemberCloudService implements IMemberCloudService{
 		}
 		return new ObjectListResult(Result.OK, true, result.data);
 	}
+
+	@Override
+	public ObjectResult updateMemberDiscountByScore(int userId, double targetRate, double fromScore, double toScore) {
+		String url = "member/updatememberdiscountbyscore";
+		Map<String, String> params = new HashMap<>();
+		params.put("customerName", ServerProperties.MEMBERCUSTOMERNAME);
+		params.put("targetRate", String.valueOf(targetRate));
+		params.put("fromScore", String.valueOf(fromScore));
+		params.put("toScore", String.valueOf(toScore));
+		String response = HttpUtil.getJSONObjectByPost(ServerProperties.MEMBERCLOUDLOCATION + url, params);
+		if (response == null){
+			return new ObjectResult("get null from server for update discountRate by score. URL = " + url + ", param = "+ params, false);
+		}
+		Gson gson = new GsonBuilder().setDateFormat(ConstantValue.DATE_PATTERN_YMDHMS).create();
+		HttpResult<Integer> result = gson.fromJson(response, new TypeToken<HttpResult<Integer>>(){}.getType());
+		if (!result.success){
+			return new ObjectResult("return false while update discountRate by score. URL = " + url + ", response = "+response, false);
+		}
+		return new ObjectResult(Result.OK, true, result.data);
+	}
 }

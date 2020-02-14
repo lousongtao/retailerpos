@@ -164,7 +164,23 @@ public class MemberController extends BaseController {
 			return memberCloudService.updateMemberScore(userId, id, newScore);
 		}
 	}
-	
+
+	@RequestMapping(value = "/member/updatememberdiscountbyscore", method = {RequestMethod.POST})
+	public @ResponseBody ObjectResult updateMemberDiscountByScore(
+			@RequestParam(value = "userId", required = true) int userId,
+			@RequestParam(value = "targetRate", required = true) double targetRate,
+			@RequestParam(value = "fromScore", required = true) double fromScore,
+			@RequestParam(value = "toScore", required = true) double toScore) throws Exception{
+		if (!permissionService.checkPermission(userId, ConstantValue.PERMISSION_UPDATE_MEMBER)){
+			return new ObjectResult("no_permission", false);
+		}
+		if (ServerProperties.MEMBERLOCATION_LOCAL.equals(ServerProperties.MEMBERLOCATION)){
+			return memberService.updateMemberDiscountByScore(userId, targetRate, fromScore, toScore);
+		} else {
+			return memberCloudService.updateMemberDiscountByScore(userId, targetRate, fromScore, toScore);
+		}
+	}
+
 	@RequestMapping(value = "/member/updatememberbalance", method = {RequestMethod.POST})
 	public @ResponseBody ObjectResult updateMemberBalance(
 			@RequestParam(value = "userId", required = true) int userId,

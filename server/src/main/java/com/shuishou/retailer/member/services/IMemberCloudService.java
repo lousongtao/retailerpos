@@ -19,4 +19,5 @@ public interface IMemberCloudService {
 	ObjectListResult queryAllMember();
 	ObjectListResult queryMemberBalance(int memberId);
 	ObjectListResult queryMemberScore(int memberId);
+	ObjectResult updateMemberDiscountByScore(int userId, double targetRate, double fromScore, double toScore);
 }
