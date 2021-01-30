@@ -502,7 +502,7 @@ public class CheckoutDialog extends CommonDialog{
 			IndentDetail detail = indent.getItems().get(i);
 			Map<String, String> mg = new HashMap<String, String>();
 			mg.put("name", detail.getGoodsName());
-			mg.put("price", CommonTools.transferNumberByPM(detail.getGoodsPrice(), ""));
+			mg.put("price", CommonTools.transferNumberByPM(detail.getSoldPrice(), ""));//20210130 here use sold price
 			mg.put("amount", detail.getAmount() + "");
 			mg.put("subTotal", CommonTools.transferNumberByPM(detail.getSoldPrice() * detail.getAmount(), ""));
 			originPrice += detail.getGoodsPrice() * detail.getAmount();
